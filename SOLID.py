@@ -47,11 +47,15 @@ pay1.process_credit(100)
 # Liskov Substitution Principle
 class Vehicle:
     def fuel_capacity(self):
-        return "100 liters"
+        pass
 
 class ElectricCar(Vehicle):
     def fuel_capacity(self):
         return "Battery capacity is 100 kWh"
+
+class PetrolCar(Vehicle):
+    def fuel_capacity(self):
+        return "100 liters"
 
 
 
@@ -62,15 +66,31 @@ class MultimediaPlayer:
         pass
     def play_video(self):
         pass
+    
+
+class AudioPlayer(MultimediaPlayer):
+    def play_audio(self):
+        pass
+
+class VideoPlayer(MultimediaPlayer):
+    def play_video(self):
+        pass 
+    
 
 
 # TODO შეცვალეთ კლასის იმპლემენტაცია, რომ დაიცვას დამოკიდებულების ინვერსიის პრინციპი.
 # Dependency Inversion Principle (DIP)
-class ConsoleDisplay:
+from abc import ABC, abstractmethod
+
+class Display(ABC):
+    @abstractmethod
     def show(self, data):
         pass
+
+class ConsoleDisplay(Display):
+    def show(self, data):
+        print(data)
 
 class WeatherStation:
     def report(self, display):
         display.show("Weather Data")
-
